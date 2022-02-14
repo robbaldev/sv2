@@ -1,0 +1,49 @@
+<script context="module">
+        // export async function load({ fetch }) {
+        // desctructured    
+    export async function load({ fetch }) {
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+        const guides = await res.json()
+        //console.log(window)
+
+        if (res.ok) {
+            return {
+                props: {
+                    // guides: guides     
+                    // same names so type once               
+                    guides
+                }
+            }
+        }
+        return {
+            status: res.status, 
+            error: new Error('Could not fetch the guides ')
+        }
+    }
+
+</script>
+    
+<script>
+export let guides 
+</script>
+
+<div class="guides">
+    <ul>
+        {#each guides as guide}
+        <li>
+            <a href={`/guides/${guide.id}`}>{guide.title}</a>
+        </li>
+        {/each}
+    </ul>
+
+</div>
+
+<style>
+    .guides {
+        margin-top: 20px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+</style>
